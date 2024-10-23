@@ -11,6 +11,7 @@ import { useColorScheme } from '~/lib/useColorScheme';
 import { PortalHost } from '@rn-primitives/portal';
 import { ThemeToggle } from '~/components/ThemeToggle';
 import { setAndroidNavigationBar } from '~/lib/android-navigation-bar';
+import { ListProvider } from './context/ListContext';
 
 const LIGHT_THEME: Theme = {
   dark: false,
@@ -65,17 +66,19 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-      <StatusBar style={isDarkColorScheme ? 'light' : 'dark'} />
-      <Stack>
-        <Stack.Screen
-          name='index'
-          options={{
-            title: 'Starter Base',
-            headerRight: () => <ThemeToggle />,
-          }}
-        />
-      </Stack>
-      <PortalHost />
+      <ListProvider>
+        <StatusBar style={isDarkColorScheme ? 'light' : 'dark'} />
+        <Stack>
+          <Stack.Screen
+            name='index'
+            options={{
+              title: 'Starter Base',
+              headerRight: () => <ThemeToggle />,
+            }}
+          />
+        </Stack>
+        <PortalHost />
+      </ListProvider>
     </ThemeProvider>
   );
 }
