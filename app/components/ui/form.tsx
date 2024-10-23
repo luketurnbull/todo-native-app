@@ -19,6 +19,7 @@ import { cn } from '~/lib/utils';
 import { Text } from '~/components/ui/text';
 import { Input } from '~/components/ui/input';
 import { Textarea } from '~/components/ui/textarea';
+import { Checkbox } from '~/components/ui/checkbox';
 
 
 const Form = FormProvider;
@@ -283,11 +284,52 @@ const FormTextarea = React.forwardRef<
 
 FormTextarea.displayName = 'FormTextarea';
 
+const FormCheckbox = React.forwardRef<
+    React.ElementRef<typeof Checkbox>,
+    Omit<FormItemProps<typeof Checkbox, boolean>, 'checked' | 'onCheckedChange'>
+>(({ label, description, value, onChange, ...props }, ref) => {
+    const { error, formItemNativeID, formDescriptionNativeID, formMessageNativeID } = useFormField();
+
+    function handleOnLabelPress() {
+        onChange?.(!value);
+    }
+
+    return (
+        <FormItem className='px-1'>
+            <View className='flex-row gap-3 items-center'>
+                <Checkbox
+                    ref={ref}
+                    aria-labelledby={formItemNativeID}
+                    aria-describedby={
+                        !error
+                            ? `${formDescriptionNativeID}`
+                            : `${formDescriptionNativeID} ${formMessageNativeID}`
+                    }
+                    aria-invalid={!!error}
+                    onCheckedChange={onChange}
+                    checked={value}
+                    {...props}
+                />
+                {!!label && (
+                    <FormLabel className='pb-0' nativeID={formItemNativeID} onPress={handleOnLabelPress}>
+                        {label}
+                    </FormLabel>
+                )}
+            </View>
+            {!!description && <FormDescription>{description}</FormDescription>}
+            <FormMessage />
+        </FormItem>
+    );
+});
+
+FormCheckbox.displayName = 'FormCheckbox';
+
 export {
     Form,
     FormDescription,
     FormField,
     FormInput,
+    FormCheckbox,
     FormItem,
     FormLabel,
     FormMessage,

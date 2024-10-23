@@ -10,6 +10,7 @@ interface ListContextType {
     current: ToDoListDocument[];
     add: (list: ToDoListItem) => Promise<void>;
     remove: (id: string) => Promise<void>;
+    updateDocument: (id: string, toDoListItem: ToDoListItem) => Promise<void>;
 }
 
 const ListContext = createContext<ListContextType | null>(null);
@@ -43,6 +44,13 @@ export function ListProvider(props: ListProviderProps) {
         await init(); // Refetch ideas to ensure we have 10 items
     }
 
+    async function updateDocument(id: string, listItem: ToDoListItem) {
+        console.log(id, listItem);
+        const response = await databases.updateDocument(LISTS_DATABASE_ID, LISTS_COLLECTION_ID, id, listItem, [Permission.write(Role.any())]);
+        console.log(response);
+        await init(); // Refetch ideas to ensure we have 10 items
+    }
+
     async function init() {
         const response = await databases.listDocuments<ToDoListDocument>(
             LISTS_DATABASE_ID,
@@ -58,7 +66,7 @@ export function ListProvider(props: ListProviderProps) {
 
 
     return (
-        <ListContext.Provider value={{ current: lists, add, remove }}>
+        <ListContext.Provider value={{ current: lists, add, remove, updateDocument }}>
             {props.children}
         </ListContext.Provider>
     );

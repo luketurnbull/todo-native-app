@@ -26,11 +26,6 @@ export default function AddToListForm() {
     });
 
     function onSubmit(values: z.infer<typeof formSchema>) {
-        Alert.alert('Submitted!', JSON.stringify(values, null, 2), [
-            {
-                text: 'OK'
-            },
-        ]);
         lists?.add(
             {
                 userId: '1',
@@ -43,18 +38,13 @@ export default function AddToListForm() {
     return (
 
         <Form {...form}>
-            <FormDescription className='m-5'>
-                <Text className='text-sm text-muted-foreground'>
-                    Fill out the form below to create a new task.
-                </Text>
-            </FormDescription>
             <FormField
                 control={form.control}
                 name='title'
                 render={({ field }) => (
                     <FormInput
-                        label='Your Task'
-                        placeholder='enter your task here'
+                        label='Your next task'
+                        placeholder='Wash the dishes'
                         autoCapitalize='none'
                         autoComplete='off'
                         {...field}
@@ -63,7 +53,7 @@ export default function AddToListForm() {
             />
             <View className='flex-row gap-3 m-5 justify-center'>
                 <Button onPress={form.handleSubmit(onSubmit)}>
-                    <Text>Submit</Text>
+                    <Text>Add</Text>
                 </Button>
             </View>
         </Form>
