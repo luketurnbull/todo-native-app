@@ -10,7 +10,7 @@ export default function AllTodosScreen() {
           <CardTitle>All Todos</CardTitle>
         </CardHeader>
         <CardContent>
-          <View className="flex flex-col gap-2">
+          <View className="flex flex-col">
             <Todo title="Buy milk" onDelete={() => {}} />
             <Todo title="Buy bread" onDelete={() => {}} />
             <Todo title="Buy eggs" onDelete={() => {}} />
