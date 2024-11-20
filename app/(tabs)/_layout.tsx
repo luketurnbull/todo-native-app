@@ -1,7 +1,6 @@
 import { Tabs } from "expo-router";
-import { SquarePlus, ScrollText, View } from "lucide-react-native";
+import { SquarePlus, ScrollText } from "lucide-react-native";
 import React from "react";
-
 import { Colors } from "~/constants/Colors";
 import { useColorScheme } from "~/hooks/useColorScheme";
 
