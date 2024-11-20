@@ -1,16 +1,9 @@
 import { Tabs } from "expo-router";
-import {
-  Home,
-  HomeIcon,
-  Code,
-  PlusCircle,
-  SquarePlus,
-  ScrollText,
-} from "lucide-react-native";
+import { SquarePlus, ScrollText, View } from "lucide-react-native";
 import React from "react";
 
-import { Colors } from "@/constants/Colors";
-import { useColorScheme } from "@/hooks/useColorScheme";
+import { Colors } from "~/constants/Colors";
+import { useColorScheme } from "~/hooks/useColorScheme";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -23,17 +16,17 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="explore"
+        name="index"
         options={{
-          title: "Explore",
-          tabBarIcon: ({ color, focused }) => <ScrollText color={color} />,
+          title: "All",
+          tabBarIcon: ({ color }) => <ScrollText color={color} />,
         }}
       />
       <Tabs.Screen
-        name="index"
+        name="add"
         options={{
           title: "Add",
-          tabBarIcon: ({ color, focused }) => <SquarePlus color={color} />,
+          tabBarIcon: ({ color }) => <SquarePlus color={color} />,
         }}
       />
     </Tabs>
