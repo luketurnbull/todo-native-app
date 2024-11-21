@@ -1,0 +1,15 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["reactNative"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./app.db"
+}
+
+model Todo {
+  id           Int     @id @default(autoincrement())
+  title        String
+  completed    Boolean @default(false)
+}

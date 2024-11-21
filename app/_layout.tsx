@@ -8,6 +8,7 @@ import * as React from "react";
 import { Platform } from "react-native";
 import { NAV_THEME } from "~/lib/constants";
 import { useColorScheme } from "~/lib/useColorScheme";
+import { initializeDb } from "~/myDbModule";
 
 const LIGHT_THEME: Theme = {
   dark: false,
@@ -29,6 +30,21 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const { colorScheme, setColorScheme, isDarkColorScheme } = useColorScheme();
   const [isColorSchemeLoaded, setIsColorSchemeLoaded] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  // Initialize the database
+  React.useEffect(() => {
+    const setup = async () => {
+      try {
+        await initializeDb();
+        setIsLoading(false);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    setup();
+  }, []);
 
   React.useEffect(() => {
     (async () => {
@@ -55,7 +71,7 @@ export default function RootLayout() {
     });
   }, []);
 
-  if (!isColorSchemeLoaded) {
+  if (!isColorSchemeLoaded || isLoading) {
     return null;
   }
 
